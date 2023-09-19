@@ -1,0 +1,36 @@
+.container {
+  display: grid;
+  place-content: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.5);
+  //   -webkit-backdrop-filter: blur(10px);
+  //   backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+}
+
+.inner {
+  --space: 16px;
+  /* Popup */
+  /* Auto layout */
+  position: relative;
+  /* White */
+  background: #ffffff;
+  /* Card drop shadow heavy */
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  max-width: 600px;
+  height: auto;
+  padding: var(--space);
+  max-height: 800px;
+  margin: 0px 0px;
+  display: flex;
+  width: calc(100% - var(--space) * 2);
+  flex-direction: column;
+}
