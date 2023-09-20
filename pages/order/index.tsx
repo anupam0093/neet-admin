@@ -599,6 +599,7 @@ function AllOrderPage() {
                       <th>TOTAL</th>
                       <th>STATUS</th>
                       <th>Billing</th>
+                      <th>Notes</th>
                       {/* <th>LOCATION</th> */}
                       {/* <th>PAYMENT TYPE</th> */}
                     </tr>

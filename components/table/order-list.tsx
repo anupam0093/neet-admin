@@ -107,7 +107,7 @@ const OrderList = ({ order, onChecked, checked }: OrderListProps) => {
         </div>
       </td>
       <td>
-        <div className={styles.date}>
+        <div className={styles.date} style={{width:"150px"}}>
           {order?.createdAt ? convertDate(order?.createdAt) : "-"}
         </div>
       </td>
@@ -141,6 +141,15 @@ const OrderList = ({ order, onChecked, checked }: OrderListProps) => {
           </p>
         </div>
       </td>
+      <td><div className={styles.addressDetails}>
+      {order?.notes.map((item:any, index:any)=>{
+        return(
+          <p key={index} className={styles.viaPayment}>
+           <span> {item.content}</span>
+          </p>
+        )
+      })}
+      </div></td>
       {/* <td>
         <div className={styles.location}>{order?.shippingAddress?.country}</div>
       </td> */}
