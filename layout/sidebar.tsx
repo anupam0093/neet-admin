@@ -151,8 +151,8 @@ const navigationArray = [
     icon: (props: SVGICONPROPS) => <ShoppingBag {...props} />,
   },
   {
-    title: ` Create Blog`,
-    href: `/blog`,
+    title: ` Blogs`,
+    href: `/blogs`,
     icon: (props: SVGICONPROPS) => <ShoppingBag {...props} />,
   },
 ];
