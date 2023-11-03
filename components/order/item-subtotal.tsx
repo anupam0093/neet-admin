@@ -6,6 +6,7 @@ const ItemSubtotal = ({ data }: any) => {
   const status = data?.payment?.status;
   const isPending = status === "PENDING_PAYMENT";
   const paymentMethod = data?.payment?.paymentMethod;
+  console.log("check", { data });
   return (
     <>
       <table className={styles.subtotal_paid}>
@@ -59,23 +60,80 @@ const ItemSubtotal = ({ data }: any) => {
             <td>
               <strong>
                 £
-                {data?.discount?.price>0?data?.discount?.price + data?.extraDelivery?.price:
-                   (data?.extraDelivery?.price)>0? (totalPrice+data?.extraDelivery?.price):totalPrice}
+                {data?.discount?.price > 0
+                  ? data?.discount?.price + data?.extraDelivery?.price
+                  : data?.extraDelivery?.price > 0
+                  ? totalPrice + data?.extraDelivery?.price
+                  : totalPrice}
               </strong>
             </td>
           </tr>
-          <tr>
-            <td>
-              <strong>Paid:</strong>
-            </td>
-            <td>
-              <strong>
-                £
-                {data?.discount?.price>0?data?.discount?.price + data?.extraDelivery?.price:
-                   (data?.extraDelivery?.price)>0? (totalPrice+data?.extraDelivery?.price):totalPrice}
-              </strong>
-            </td>
-          </tr>
+          {data?.upfront === 30 ? (
+            <>
+              <tr>
+                <td>
+                  <strong>Upfront:</strong>
+                </td>
+                <td>
+                  <strong>
+                    £
+                    {data?.discount?.price > 0
+                      ? data?.discount?.price + data?.extraDelivery?.price
+                      : data?.extraDelivery?.price > 0
+                      ? data?.upfront + data?.extraDelivery?.price
+                      : data?.upfront}
+                  </strong>
+                </td>
+              </tr>
+            </>
+          ) : (
+            <></>
+          )}
+          {data?.upfront === 30 ? (
+            <>
+              <tr>
+                <td>
+                  <strong>Remaining:</strong>
+                </td>
+                <td>
+                  <strong>
+                    £
+                    {/* need remaining price minus from upfront price and also check if there is any discount price then add otherwise don't add same as extra dilivery */}
+                    {data?.discount?.price > 0
+                      ? data?.discount?.price + data?.extraDelivery?.price
+                      : data?.extraDelivery?.price > 0
+                      ? totalPrice - data?.upfront + data?.extraDelivery?.price
+                      : totalPrice - data?.upfront}
+                  </strong>
+                </td>
+              </tr>
+            </>
+          ) : (
+            <></>
+          )}
+          {/* if upfront amount is 30 then dont show the pai table row otherwise show */}
+          {data?.upfront === 30 ? (
+            <> </>
+          ) : (
+            <>
+              <tr>
+                <td>
+                  <strong>Paid:</strong>
+                </td>
+                <td>
+                  <strong>
+                    £
+                    {data?.discount?.price > 0
+                      ? data?.discount?.price + data?.extraDelivery?.price
+                      : data?.extraDelivery?.price > 0
+                      ? totalPrice + data?.extraDelivery?.price
+                      : totalPrice}
+                  </strong>
+                </td>
+              </tr>
+            </>
+          )}
+
           <tr>
             <span>
               {moment(data?.createdAt).format(`MMMM DD, YYYY`)} via{" "}
