@@ -72,7 +72,7 @@ const ItemSubtotal = ({ data }: any) => {
             <>
               <tr>
                 <td>
-                  <strong>Upfront:</strong>
+                  <strong>Deposit paid:</strong>
                 </td>
                 <td>
                   <strong>
@@ -93,7 +93,7 @@ const ItemSubtotal = ({ data }: any) => {
             <>
               <tr>
                 <td>
-                  <strong>Remaining:</strong>
+                  <strong>Total due on delivery:</strong>
                 </td>
                 <td>
                   <strong>
