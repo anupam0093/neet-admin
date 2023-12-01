@@ -18,6 +18,9 @@ const accessoriesTabArray = [
     {
         value: "Mattress",
     },
+    {
+        value:"GasLift",
+    },
 ];
 
 

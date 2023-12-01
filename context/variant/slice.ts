@@ -8,6 +8,7 @@ export const init = {
     feet: [],
     mattress: [],
     storage: [],
+    gaslift:[],
 };
 
 const { initialState, reducer, actions } = slicer<ContextType>({
@@ -47,6 +48,12 @@ const { initialState, reducer, actions } = slicer<ContextType>({
             return {
                 ...state,
                 storage: action.payload,
+            };
+        },
+        ["GasLift"]: (state: StateTypes, action: ActionTypes) => {
+            return {
+                ...state,
+                gaslift: action.payload,
             };
         },
         // ["WHOLESTATE"]: (state: StateTypes, action: ActionTypes) => {

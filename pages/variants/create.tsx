@@ -18,6 +18,7 @@ import pMap from "p-map";
 import { uploadBedImage } from "network-requests/api";
 import Button from "components/element/button";
 import { toast } from "react-toastify";
+import GasLift from "components/product/variants/gaslift";
 
 interface AccessoriesTabsProps {
   tabName: string;
@@ -35,7 +36,7 @@ export default CreateVariant;
 
 const Create = () => {
   const { state, dispatch } = React.useContext(VariantsContext);
-  const { color, feet, headboard, mattress, general, storage } = state;
+  const { color, feet, headboard, mattress, general, storage,gaslift } = state;
 
   // const [activeTab, setActiveTab] = React.useState("Basic");
   // const onActiveTab = (value: string) => {
@@ -160,6 +161,9 @@ const Create = () => {
               getValue={(v) => dispatch(VariantsActions.MATTRESS(v))}
               value={mattress}
             />
+            <GasLift 
+            id={id} getValue={(v) => dispatch(VariantsActions.GasLift(v))}
+              value={gaslift}/>
           </div>
           <div className="grid">
             <Button onClick={handleProductUpload}>Submit Data</Button>

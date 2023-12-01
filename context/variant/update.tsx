@@ -56,6 +56,7 @@ const UpdateVariantProvider = ({
       dispatch(VariantsActions.STORAGE(data?.accessories?.storage));
       dispatch(VariantsActions.FEET(data?.accessories?.feet));
       dispatch(VariantsActions.MATTRESS(data?.accessories?.mattress));
+      dispatch(VariantsActions.GasLift((data?.accessories?.gaslift)));
     }
   }, [data, isFetched]);
 

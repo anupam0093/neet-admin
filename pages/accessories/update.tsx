@@ -32,7 +32,7 @@ export default function UpdateProduct({ id }: Props) {
   const { mutate } = useUpdateAccessoriesIcon();
 
   const [inputValue, setInputValue] = React.useState<InputTypes>({
-    type: "COLOR",
+    type: "COLOR",  
     label: "",
     value: "",
     image: "" as any,

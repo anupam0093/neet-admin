@@ -20,6 +20,7 @@ import {
 } from "context/variant/update";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import GasLift from "components/product/variants/gaslift";
 
 interface AccessoriesTabsProps {
   id: string;
@@ -41,7 +42,7 @@ export default CreateVariant;
 
 const Create = () => {
   const { state, dispatch } = React.useContext(UpdateVariantContext);
-  const { color, feet, headboard, mattress, general, storage } = state;
+  const { color, feet, headboard, mattress, general,gaslift, storage } = state;
   // const [activeTab, setActiveTab] = React.useState("Basic");
   console.log({ state });
   const router = useRouter();
@@ -92,6 +93,7 @@ const Create = () => {
           feet: state.feet,
           headboard: state.headboard,
           mattress: state.mattress,
+          gaslift:state.gaslift,
         },
         isDraft: isDraft,
       },
@@ -160,6 +162,8 @@ const Create = () => {
               getValue={(v) => dispatch(VariantsActions.MATTRESS(v))}
               value={mattress}
             />
+            <GasLift id={id} getValue={(v) => dispatch(VariantsActions.GasLift(v))}
+              value={gaslift}/>
           </div>
           <div className="grid">
             <Button onClick={handleProductUpdate}>Submit Data</Button>

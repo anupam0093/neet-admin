@@ -17,6 +17,7 @@ interface AccessoriesTypes {
   feet?: ProductType[];
   headboard?: ProductType[];
   mattress?: ProductType[];
+  gaslift?: ProductType[];
 }
 
 interface AccessoriesOrderTypes {
@@ -25,6 +26,7 @@ interface AccessoriesOrderTypes {
   feet?: ProductType;
   headboard?: ProductType;
   mattress?: ProductType;
+  gaslift?: ProductType;
   size?: ProductType;
 }
 interface DeliveryTypes{

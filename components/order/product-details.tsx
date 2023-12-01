@@ -21,6 +21,7 @@ const ProductDetails = ({
   const headboard = accessories?.headboard;
   const feet = accessories?.feet;
   const storage = accessories?.storage;
+  const gaslift = accessories?.gaslift;
   const size = accessories?.size;
   const isDivanbed = useMemo(() => {
     return !data?.categories?.find((item: any) => notToShow?.includes(item));
@@ -90,6 +91,17 @@ const ProductDetails = ({
                     1 <small>(1x1)</small>
                   </td>
                   <td>£{mattress?.price || 0}</td>
+                </tr>
+              )}
+               {gaslift?.name && (
+                <tr>
+                  <td>Select Your Gas Lift</td>
+                  <td>{gaslift?.name}</td>
+                  <td>£{gaslift?.price}</td>
+                  <td>
+                    1 <small>(1x1)</small>
+                  </td>
+                  <td>£{gaslift?.price || 0}</td>
                 </tr>
               )}
               {headboard && (

@@ -1,6 +1,7 @@
 // FOR COLOR
 import AddColor from "./create/color";
 import AddFeet from "./create/feet";
+import AddGasLift from "./create/gaslift";
 import AddHeadBoard from "./create/headBoard";
 import AddMattress from "./create/mattress";
 import AddSize from "./create/size";
@@ -22,6 +23,8 @@ export const AddAccessoriesTabs = ({ tabName }: any) => {
       return <AddFeet />;
     case "Mattress":
       return <AddMattress />;
+    case "GasLift":
+      return <AddGasLift/>
     default:
       return null;
   }
@@ -41,6 +44,8 @@ export const UpdateAccessoriesTabs = ({ tabName }: any) => {
       return <AccessoriesList type="FEET" />;
     case "Mattress":
       return <AccessoriesList type="MATTRESS" />;
+      case "GasLift":
+      return <AccessoriesList type="GasLift" />;
     default:
       return null;
   }

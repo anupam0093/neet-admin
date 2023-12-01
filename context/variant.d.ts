@@ -7,6 +7,7 @@ interface ContextType {
     feet: ProductType[];
     mattress: ProductType[];
     storage: ProductType[];
+    gaslift: ProductType[];
 }
 
 interface StateTypes extends ContextType { }
