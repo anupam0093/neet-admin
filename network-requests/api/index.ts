@@ -11,7 +11,9 @@ import {
   CreateBedVariantResponse,
   CreateBlogTypes,
   GetAllBedsParams,
+  GetAllOrderssParams,
   Order,
+  OrderResponse,
   UploadBedImage,
   VariantsTypes,
 } from "../types";
@@ -434,3 +436,11 @@ export const syncWithGoogle = (id: string): Promise<any> =>
     .catch((error) => {
       throw error;
     });
+
+    export const getAllOrdersTest = (id:any,{ pageParam = 1 }: GetAllBedsParams): Promise<OrderResponse> =>
+    axios
+      .get<OrderResponse>(`/order/get${id ? `?id=${id}` : ''}?page=${pageParam}`)
+      .then((response) => response.data)
+      .catch((error) => {
+        throw error;
+      });

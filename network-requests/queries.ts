@@ -6,6 +6,7 @@ import {
   getAllHeadboardsWithImageAdmin,
   getAllIcons,
   getAllOrders,
+  getAllOrdersTest,
   getBedById,
   getBedVariantById,
   getHeadboardById,
@@ -30,6 +31,7 @@ import {
   IUser,
   IUserResponse,
   Order,
+  OrderResponse,
   Review,
 } from "./types";
 
@@ -228,3 +230,21 @@ export const useGetBlogsById = (id: string) =>
 
 export const useGetAllBlogs = () =>
   useQuery(["blogs"], (): Promise<Coupon[]> => getAllBlogs());
+
+
+
+  export const useFetchAllOrdersTest = (id?: string | undefined) =>
+  useInfiniteQuery(
+    ['ordered', id],
+    ({ pageParam = 1 }): Promise<OrderResponse> =>
+    getAllOrdersTest(id, pageParam),
+    {
+      refetchOnMount: true,
+      getNextPageParam: (lastPage: OrderResponse) => {
+        if (lastPage.nextPage <= lastPage.totalPages) {
+          return lastPage.nextPage;
+        }
+        return undefined;
+      },
+    }
+  );

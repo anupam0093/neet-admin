@@ -27,7 +27,7 @@ const ProductDetails = ({
     return !data?.categories?.find((item: any) => notToShow?.includes(item));
   }, [data]);
 
-  console.log('accessories', data);
+  console.log('accessories', accessories);
   return (
     <>  
       <div className={styles.mainsectionlist2}>

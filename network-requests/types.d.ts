@@ -3,6 +3,10 @@ import React from "react";
 type GetAllBedsParams = {
   pageParam: number;
 };
+type GetAllOrderssParams = {
+  pageParam: number;
+  id:string;
+};
 
 interface ProductType {
   name?: string;
@@ -88,6 +92,11 @@ interface BlogRequestPayload {
 
 type BedResponse = {
   data: Bed[];
+  totalPages: number;
+  nextPage: number;
+};
+type OrderResponse = {
+  data: Order[];
   totalPages: number;
   nextPage: number;
 };
