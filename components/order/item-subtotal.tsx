@@ -68,6 +68,19 @@ const ItemSubtotal = ({ data }: any) => {
               </strong>
             </td>
           </tr>
+          <tr>
+            <td>Tax</td>
+            <td>(GB VAT 20% Included)&nbsp; &nbsp;
+              <strong>
+                £
+                {(((data?.discount?.price > 0
+                  ? data?.discount?.price + data?.extraDelivery?.price
+                  : data?.extraDelivery?.price > 0
+                  ? totalPrice + data?.extraDelivery?.price
+                  : totalPrice)*20)/(100+20)).toFixed(2)}
+              </strong>
+            </td>
+          </tr>
           {data?.upfront === 30 ? (
             <>
               <tr>

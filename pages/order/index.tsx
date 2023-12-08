@@ -5,6 +5,7 @@ import OrderList from "components/table/order-list";
 import DashboardHeader from "layout/header";
 import { useFetchAllOrders, useFetchAllOrdersTest, useGetMyself } from "network-requests/queries";
 import { orderStatus } from "constants/OrderActions";
+import _ from 'lodash';
 import {
   useBulkOrderUpdate,
   useUpdateOrderHistory,
@@ -24,18 +25,42 @@ function AllOrderPage() {
   });
   const router = useRouter();
   const { data: me } = useGetMyself();
+  
+  
+  const [dell,setDell]=React.useState(false);
+  const [orderSatat,setOrderStat]=React.useState("");
+  console.log("orderSatat",orderSatat);
   const { data:order,
     isLoading,
     isError,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    refetch:refresh,}=useFetchAllOrdersTest(router?.query?.id as any)
+    refetch,}=useFetchAllOrdersTest(orderSatat,dell,router?.query?.id as any)
   console.log("order on line 22",order)
   const allOrders = useMemo(()=>order?.pages?.flatMap((page) => page.data),[order?.pages]);
-  console.log("all Order",allOrders);
-  console.log("ALL order on line 22",allOrders)
-  // const { data, refetch } = useFetchAllOrders(router?.query?.id as any);
+    // const { data, refetch } = useFetchAllOrders(router?.query?.id as any);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const HandleStat = React.useCallback(
+    async (stat: any) => {
+      setDell(false);
+      setOrderStat(stat);
+      await refetch();
+      // console.log("stat", orderSatat);
+    }, // 300 milliseconds debounce time
+    [refetch]
+  );
+  // console.log("all Order",allOrders);
+  React.useEffect(() => {
+    refetch();
+  }, [orderSatat, refetch]);
+
+
+
+
+  console.log("ALL order on line 22",order)
+
   const { mutateAsync } = useBulkOrderUpdate();
   const { mutateAsync: historyMutate } = useUpdateOrderHistory();
   // filter payment method
@@ -47,10 +72,23 @@ function AllOrderPage() {
   const [selectedAction, setSelectedAction] = useState("");
 
   const onSetOrders = (key: string, value: any) => {
+    refetch();
     setSelectedAction(key);
     setOrders(value);
+    
   }
+const filterArrary = React.useMemo(() => {
+    return allOrders?.filter((d) => {
+      return filterPayment === ""
+        ? d
+        : d.payment?.paymentMethod === filterPayment;
+    });
+  }, [allOrders, filterPayment]);
 
+
+  React.useEffect(() => {
+    setOrders(allOrders?.filter((order: any) => order.isDeleted === false) ?? []);
+  }, [allOrders]);
   const selectedOrdersPrintInvoice = React.useMemo(() => {
     if (!selected.length) return [];
     if (!orders) return [];
@@ -130,7 +168,7 @@ function AllOrderPage() {
       { ids: selected, status: action },
       {
         onSuccess: () => {
-          refresh();
+          refetch();
           setSelected([]);
           setAction("");
         },
@@ -145,26 +183,15 @@ function AllOrderPage() {
     historyMutate,
     mutateAsync,
     selected,
-    refresh,
+    refetch,
   ]);
 
   const onFilterPayment = React.useCallback((value: string) => {
     setFilterPayment(value);
   }, []);
 
-  const filterArrary = React.useMemo(() => {
-    return orders?.filter((d) => {
-      return filterPayment === ""
-        ? d
-        : d.payment?.paymentMethod === filterPayment;
-    });
-  }, [filterPayment, orders]);
 
-  React.useEffect(() => {
-    if (allOrders) {
-      setOrders(allOrders?.filter((order: any) => order.isDeleted === false));
-    }
-  }, [allOrders]);
+  
 
   return (
     <>
@@ -235,13 +262,15 @@ function AllOrderPage() {
                   <ul>
                     <li>
                       <a
-                        onClick={() =>
-                          onSetOrders(
-                            "all",
-                            allOrders?.filter(
-                              (order: any) => order.isDeleted === false
-                            )
-                          )
+                        onClick={() =>{HandleStat("")
+                        refetch()
+                       }
+                          // onSetOrders(
+                          //   "all",
+                          //   allOrders?.filter(
+                          //     (order: any) => order.isDeleted === false
+                          //   )
+                          // )
                         }
                       >
                         All <span>({allOrders?.length})</span>
@@ -250,13 +279,16 @@ function AllOrderPage() {
                     <li>
                       <a
                         onClick={() => {
-                          onSetOrders(
-                            "processing",
-                            allOrders?.filter(
-                              (order: any) =>
-                                order.payment.status === orderStatus.Processing
-                            )
-                          );
+                          // refresh();
+                          HandleStat(orderStatus.Processing)
+                          refetch();
+                          // onSetOrders(
+                          //   "processing",
+                          //   allOrders?.filter(
+                          //     (order: any) =>
+                          //       order.payment.status === orderStatus.Processing
+                          //   )
+                          // );
                         }}
                       >
                         Processing{" "}
@@ -277,14 +309,15 @@ function AllOrderPage() {
                     <li>
                       <a
                         onClick={() => {
-                          onSetOrders(
-                            "pending-payments",
-                            allOrders?.filter(
-                              (order: any) =>
-                                order.payment.status ===
-                                orderStatus.PendingPayment
-                            )
-                          );
+                          HandleStat(orderStatus.PendingPayment)
+                          // onSetOrders(
+                          //   "pending-payments",
+                          //   allOrders?.filter(
+                          //     (order: any) =>
+                          //       order.payment.status ===
+                          //       orderStatus.PendingPayment
+                          //   )
+                          // );
                         }}
                       >
                         Pending payments{" "}
@@ -305,13 +338,15 @@ function AllOrderPage() {
                     <li>
                       <a
                         onClick={() => {
-                          onSetOrders(
-                            "on-hold",
-                            allOrders?.filter(
-                              (order: any) =>
-                                order.payment.status === orderStatus.OnHold
-                            )
-                          );
+                          HandleStat(orderStatus.OnHold)
+                          refetch();
+                          // onSetOrders(
+                          //   "on-hold",
+                          //   allOrders?.filter(
+                          //     (order: any) =>
+                          //       order.payment.status === orderStatus.OnHold
+                          //   )
+                          // );
                         }}
                       >
                         On hold{" "}
@@ -332,13 +367,15 @@ function AllOrderPage() {
                     <li>
                       <a
                         onClick={() => {
-                          onSetOrders(
-                            "completed",
-                            allOrders?.filter(
-                              (order: any) =>
-                                order.payment.status === orderStatus.Completed
-                            )
-                          );
+                          HandleStat(orderStatus.Completed)
+                          refetch();
+                          // onSetOrders(
+                          //   "completed",
+                          //   allOrders?.filter(
+                          //     (order: any) =>
+                          //       order.payment.status === orderStatus.Completed
+                          //   )
+                          // );
                         }}
                       >
                         Completed{" "}
@@ -359,13 +396,15 @@ function AllOrderPage() {
                     <li>
                       <a
                         onClick={() => {
-                          onSetOrders(
-                            "cancelled",
-                            allOrders?.filter(
-                              (order: any) =>
-                                order.payment.status === orderStatus.Cancelled
-                            )
-                          );
+                          HandleStat(orderStatus.Cancelled)
+                          refetch();
+                          // onSetOrders(
+                          //   "cancelled",
+                          //   allOrders?.filter(
+                          //     (order: any) =>
+                          //       order.payment.status === orderStatus.Cancelled
+                          //   )
+                          // );
                         }}
                       >
                         Cancelled{" "}
@@ -386,13 +425,15 @@ function AllOrderPage() {
                     <li>
                       <a
                         onClick={() => {
-                          onSetOrders(
-                            "refunded",
-                            allOrders?.filter(
-                              (order: any) =>
-                                order.payment.status === orderStatus.Refunded
-                            )
-                          );
+                          HandleStat(orderStatus.Refunded)
+                          refetch();
+                          // onSetOrders(
+                          //   "refunded",
+                          //   allOrders?.filter(
+                          //     (order: any) =>
+                          //       order.payment.status === orderStatus.Refunded
+                          //   )
+                          // );
                         }}
                       >
                         Refunded{" "}
@@ -413,13 +454,15 @@ function AllOrderPage() {
                     <li>
                       <a
                         onClick={() => {
-                          onSetOrders(
-                            "failed",
-                            allOrders?.filter(
-                              (order: any) =>
-                                order.payment.status === orderStatus.Failed
-                            )
-                          );
+                          HandleStat(orderStatus.Failed)
+                          refetch();
+                          // onSetOrders(
+                          //   "failed",
+                          //   allOrders?.filter(
+                          //     (order: any) =>
+                          //       order.payment.status === orderStatus.Failed
+                          //   )
+                          // );
                         }}
                       >
                         Failed{" "}
@@ -440,13 +483,16 @@ function AllOrderPage() {
                     <li>
                       <a
                         onClick={() => {
-                          onSetOrders(
-                            "delivered",
-                            allOrders?.filter(
-                              (order: any) =>
-                                order.payment.status === orderStatus.Delivered
-                            )
-                          );
+                          HandleStat(orderStatus.Delivered)
+                          refetch();
+                          
+                          // onSetOrders(
+                          //   "delivered",
+                          //   allOrders?.filter(
+                          //     (order: any) =>
+                          //       order.payment.status === orderStatus.Delivered
+                          //   )
+                          // );
                         }}
                       >
                         Delivered{" "}
@@ -467,12 +513,14 @@ function AllOrderPage() {
                     <li>
                       <a
                         onClick={() => {
-                          onSetOrders(
-                            "bin",
-                            allOrders?.filter(
-                              (order: any) => order.isDeleted === true
-                            )
-                          );
+                          setDell(true)
+                          refetch()
+                          // onSetOrders(
+                          //   "bin",
+                          //   allOrders?.filter(
+                          //     (order: any) => order.isDeleted === true
+                          //   )
+                          // );
                         }}
                       >
                         Bin{" "}
@@ -639,8 +687,8 @@ function AllOrderPage() {
               <div className={styles.mainheading}>
                 <Button
                   // ref={ref}
-                  onClick={() => fetchNextPage()}
-                  // disabled={!hasNextPage || isFetchingNextPage}
+                  onClick={() =>{ fetchNextPage()}}
+                  disabled={!hasNextPage || isFetchingNextPage}
                 >
                   {isFetchingNextPage
                     ? "Loading more..."

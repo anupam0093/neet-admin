@@ -142,7 +142,7 @@ const OrderList = ({ order, onChecked, checked }: OrderListProps) => {
         </div>
       </td>
       <td><div className={styles.addressDetails}>
-      {order?.notes.map((item:any, index:any)=>{
+      {order?.notes?.map((item:any, index:any)=>{
         return(
           <p key={index} className={styles.viaPayment}>
            <span> {item.content}</span>

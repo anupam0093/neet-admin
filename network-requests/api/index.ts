@@ -437,10 +437,11 @@ export const syncWithGoogle = (id: string): Promise<any> =>
       throw error;
     });
 
-    export const getAllOrdersTest = (id:any,{ pageParam = 1 }: GetAllBedsParams): Promise<OrderResponse> =>
+    export const getAllOrdersTest = (type:string,del:boolean,id:any, pageParam:number): Promise<OrderResponse> =>
     axios
-      .get<OrderResponse>(`/order/get${id ? `?id=${id}` : ''}?page=${pageParam}`)
+      .get<OrderResponse>(`/order/get${id ? `?id=${id}` : `?page=${pageParam}&type=${type}&del=${del}`}`)
       .then((response) => response.data)
       .catch((error) => {
+        console.error('Error fetching orders:', error);
         throw error;
       });

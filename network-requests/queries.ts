@@ -1,4 +1,4 @@
-import { useInfiniteQuery, useQuery } from "react-query";
+import { useInfiniteQuery, useQuery  } from "react-query";
 import {
   getAllBeds,
   getAllBedsWithImage,
@@ -233,11 +233,11 @@ export const useGetAllBlogs = () =>
 
 
 
-  export const useFetchAllOrdersTest = (id?: string | undefined) =>
+  export const useFetchAllOrdersTest = (type:string,del:boolean,id?: string | undefined,) =>
   useInfiniteQuery(
     ['ordered', id],
     ({ pageParam = 1 }): Promise<OrderResponse> =>
-    getAllOrdersTest(id, pageParam),
+    getAllOrdersTest(type,del,id, pageParam),
     {
       refetchOnMount: true,
       getNextPageParam: (lastPage: OrderResponse) => {
