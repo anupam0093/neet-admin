@@ -94,63 +94,7 @@ export default Sidebar;
 //   ];
 
 const navigationArray = [
-  {
-    title: `Reports`,
-    href: `/`,
-    icon: (props: SVGICONPROPS) => <ShieldIcon {...props} />,
-  },
-  {
-    title: `Product`,
-    href: `/product`,
-    icon: (props: SVGICONPROPS) => <AppsIcon {...props} />,
-  },
-  {
-    title: `Accessories`,
-    href: `/accessories`,
-    icon: (props: SVGICONPROPS) => <DatabaseIcon {...props} />,
-  },
-  {
-    title: `Headboard`,
-    href: `/headboard`,
-    icon: (props: SVGICONPROPS) => <DatabaseIcon {...props} />,
-  },
-  {
-    title: `Order`,
-    href: `/order`,
-    icon: (props: SVGICONPROPS) => <ShoppingBag {...props} />,
-  },
-  {
-    title: `User`,
-    href: `/users`,
-    icon: (props: SVGICONPROPS) => <ShoppingBag {...props} />,
-  },
-  {
-    title: `New Product`,
-    href: `/newproduct`,
-    icon: (props: SVGICONPROPS) => <ShoppingBag {...props} />,
-  },
-  {
-    title: `Coupons`,
-    href: `/coupons`,
-    icon: (props: SVGICONPROPS) => <ShoppingBag {...props} />,
-  },
-  {
-    title: `Reviews`,
-    href: `/reviews`,
-    active: ["reviews"],
-    icon: (props: SVGICONPROPS) => <ShieldIcon {...props} />,
-  },
-  {
-    title: `Add User`,
-    href: `/newproduct/create`,
-    icon: (props: SVGICONPROPS) => <ShoppingBag {...props} />,
-  },
-  {
-    title: ` Category`,
-    href: `/newproduct/addcategory`,
-    icon: (props: SVGICONPROPS) => <ShoppingBag {...props} />,
-  },
-  {
+    {
     title: ` Blogs`,
     href: `/blogs`,
     icon: (props: SVGICONPROPS) => <ShoppingBag {...props} />,
